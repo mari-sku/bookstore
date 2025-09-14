@@ -1,12 +1,27 @@
 package com.example.bookstore.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Book {
+
+    // id attribuutti tietokantaa varten
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
+    
+
+    //attribuutit
     private String title;
     private String author;
     private int publicationYear;
     private String isbn;
     private double price;
 
+    //konstruktorit
     public Book() {
     }
 
@@ -17,6 +32,10 @@ public class Book {
         this.isbn = isbn;
         this.price = price;
     }
+
+    public Long getId() {
+    return id;
+}
 
     // getterit & setterit
     public String getTitle() {
