@@ -1,9 +1,12 @@
 package com.example.bookstore.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 
 @Entity
@@ -15,6 +18,13 @@ public class Category {
 
     private Long id;
     private String name;
+
+    //tuodaan books-lista 
+    // mappedBy="category" kertoo, että suhteen omistaa* Book-luokan category-attribuutti, eikä JPA luo erillistä join-taulua. 
+    // (*suhteen omistava luokka on se, jonka taulussa on ulkoinen avain)
+    @OneToMany(mappedBy = "category")
+     private List<Book> books;
+
    
 // konstruktorit 
  public Category() {
@@ -30,15 +40,15 @@ public Category(String name) {
    this.name = name;
 }
 
-//getterit ja setterit
+//getterit ja setterit categorylle
 
  public Long getId() {
    return id;
 }
 
-public void setId(Long id) {
-   this.id = id;
-}
+// public void setId(Long id) {     // ei välttämättä tarvita, ellei haluta manuaalisesti asettaa id:tä
+//    this.id = id;
+// }
 
 public String getName() {
    return name;
@@ -46,6 +56,17 @@ public String getName() {
 
 public void setName(String name) {
    this.name = name;
+
+   // getterit ja setterit book listille
+   
+}
+
+ public List<Book> getBooks() {
+   return books;
+}
+
+public void setBooks(List<Book> books) {
+   this.books = books;
 }
 
  // to string 
