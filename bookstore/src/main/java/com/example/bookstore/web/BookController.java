@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 // http://localhost:8080/index
 // http://localhost:8080/booklist
-// http://localhost:8080/add
+// http://localhost:8080/addbook
+
 // http://localhost:8080/h2-console    // url: jdbc:h2:mem:testdb   username: sa
 
 @Controller
@@ -37,14 +38,14 @@ public BookController(BookRepository repository) {
     }
 
 //DELETE kirjan poistaminen listasta
-@GetMapping("/delete/{id}")
+@GetMapping("/deletebook/{id}")
 public String deleteBook(@PathVariable("id") Long id, Model model) {
     repository.deleteById(id);
     return "redirect:../booklist";
 }
 
 //ADD kirjan lisääminen listaan
-@GetMapping("/add")
+@GetMapping("/addbook")
 public String addBook(Model model) {
    model.addAttribute("book", new Book());
    return "addbook";

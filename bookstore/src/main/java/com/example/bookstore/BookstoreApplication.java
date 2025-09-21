@@ -12,6 +12,10 @@ import com.example.bookstore.domain.CategoryRepository;
 
 @SpringBootApplication
 
+//jos pitää tappaa prosessi:
+// netstat -ano | findstr :8080
+// taskkill /PID <PID> /F
+
 // http://localhost:8080/h2-console    // url: jdbc:h2:mem:testdb   username: sa
 public class BookstoreApplication {
 

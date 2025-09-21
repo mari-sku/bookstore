@@ -1,0 +1,18 @@
+<!-- http://localhost:8080/addcategory -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Add a Category</title>
+</head>
+<body>
+<h1>Add a New Category</h1>
+
+<form th:object="${category}" th:action="@{/savecategory}" method="post">
+    <label>Category name:</label>
+    <input type="text" th:field="*{name}"/><br/>
+
+    <input type="submit" value="Save"/>
+</form>
+</body>
+</html>
