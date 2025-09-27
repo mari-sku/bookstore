@@ -1,5 +1,7 @@
 package com.example.bookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +21,8 @@ public class Book {
 
     //suhde ManyToOne (kirjoja voi olla monia, mutta yhdellä kirjalla on yksi kategoria)
     @ManyToOne
+    // @JsonIgnoreProperties - one way to avoid infinite loop during JSON serialization/deserialization with bidirectional relationships
+    @JsonIgnoreProperties ("books") 
     //määritellään viiteavain Book-tauluun nimellä "category_id", jolla se yhdistetään Category-tauluun.
     @JoinColumn(name="category_id")
     // tuodaan category-olio

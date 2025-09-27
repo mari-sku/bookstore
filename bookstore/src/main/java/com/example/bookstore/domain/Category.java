@@ -2,6 +2,9 @@ package com.example.bookstore.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +25,9 @@ public class Category {
     //tuodaan books-lista 
     // mappedBy="category" kertoo, että suhteen omistaa* Book-luokan category-attribuutti, eikä JPA luo erillistä join-taulua. 
     // (*suhteen omistava luokka on se, jonka taulussa on ulkoinen avain)
-    @OneToMany(mappedBy = "category")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    //@JsonIgnore
+	@JsonIgnoreProperties("category")  // one way to avoid infinite loop during JSON serialization/deserialization
      private List<Book> books;
 
    
