@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
@@ -24,6 +25,7 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    
 @Bean 
 public SecurityFilterChain configure(HttpSecurity http) throws Exception {
     
@@ -32,9 +34,16 @@ public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         .authorizeHttpRequests(authorize -> authorize 
        	.requestMatchers("/css/**").permitAll() // Enable css even when logged out
         .requestMatchers("/deletebook/**").hasAuthority("ADMIN")  // vain ADMIN voi poistaa kirjoja
+         .requestMatchers(toH2Console()).permitAll()
         .anyRequest().authenticated()
       )
-
+     .csrf(csrf -> csrf
+          .ignoringRequestMatchers(toH2Console())
+     )
+     .headers(headers -> headers
+         .frameOptions(frameoptions -> frameoptions
+                  .disable())
+     )
     // onnistunut kirjautuminen vie /booklist sivulle 
       .formLogin(formlogin -> formlogin
           .loginPage("/login")       // oma login sivu
