@@ -62,6 +62,10 @@ public class Book {
     return id;
 }
 
+   public void setId(Long id) {
+        this.id = id;
+    }
+
     // getterit & setterit bookille
     public String getTitle() {
         return title;
@@ -119,7 +123,5 @@ public class Book {
         return "Book [title=" + title + ", author=" + author + ", publicationYear=" + publicationYear + ", isbn=" + isbn
                 + ", price=" + price + "]";
     }
-
-    
 
 }

@@ -3,6 +3,7 @@ import com.example.bookstore.domain.Book;
 import com.example.bookstore.domain.BookRepository;
 import com.example.bookstore.domain.CategoryRepository;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +43,7 @@ public BookController(BookRepository repository, CategoryRepository categoryRepo
     }
 
 //DELETE kirjan poistaminen listasta
+@PreAuthorize("hasRole('ADMIN')")       //ei onnistu poisto urlilla ellei ole admin!
 @GetMapping("/deletebook/{id}")
 public String deleteBook(@PathVariable("id") Long id, Model model) {
     bookRepository.deleteById(id);

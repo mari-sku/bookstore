@@ -1,14 +1,25 @@
 <!-- http://localhost:8080/booklist -->
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 
 <head>
     <title>Booklist</title>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
+ <div class="d-flex justify-content-between align-items-center mb-3">
     <h1>List of Books</h1>
+    
+    <div class="d-flex align-items-center gap-2">
+        <span>Logged in as: <span sec:authentication="name"></span></span>
+        <form th:action="@{/logout}" method="post" class="m-0 p-0">
+            <button type="submit" class="btn btn-warning">Logout</button>
+        </form>
+    </div>
+</div>
     <table class="table table-striped">
         <tr>
             <th>Title</th>
@@ -27,9 +38,10 @@
             <td th:text="${book.isbn}"></td>
             <td th:text="${book.price}"></td>
             <td th:text="${book.category.name}"></td>
-            <td>
-                <a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
-            </td>
+            <!-- vain admin näkee poistonapin -->
+           <td sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
+</td>
             <td>
                 <a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-primary">Edit</a>
             </td>
