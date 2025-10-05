@@ -43,7 +43,7 @@ public BookController(BookRepository repository, CategoryRepository categoryRepo
     }
 
 //DELETE kirjan poistaminen listasta
-@PreAuthorize("hasRole('ADMIN')")       //ei onnistu poisto urlilla ellei ole admin!
+@PreAuthorize("hasAuthority('ADMIN')")       //ei onnistu poisto urlilla ellei ole admin!
 @GetMapping("/deletebook/{id}")
 public String deleteBook(@PathVariable("id") Long id, Model model) {
     bookRepository.deleteById(id);

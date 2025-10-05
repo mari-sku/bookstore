@@ -7,7 +7,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.example.bookstore.domain.AppUser;
+import com.example.bookstore.domain.AppUserRepository;
 import com.example.bookstore.domain.Book;
 import com.example.bookstore.domain.BookRepository;
 import com.example.bookstore.domain.Category;
@@ -29,15 +33,10 @@ public class BookstoreApplication {
 		SpringApplication.run(BookstoreApplication.class, args);
 	}
 
-	@Bean // bean-annotaatio kertoo Springille, että metodia kutsutaan heti sovellusta
-			// käynnistäessä. näin oliota voi myös käyttää muissa komponenteissä dependency
-			// injection kautta
-	// commandlinerunner on Springin käyttöliittymä, jonka metodi suoritetaan
-	// sovelluksen heti käynnistyessä. kätevä tapa tehdä alustavaa dataa
-	// tietokantaan.
-	// bookrepository injektoidaan metodiin Springin kautta, että voi käyttää
-	// repository-oliota tallentamaan book-olioita tietokantaan
-	public CommandLineRunner seedData(BookRepository bookRepository, CategoryRepository categoryRepository) {
+@Bean // bean-annotaatio kertoo Springille, että metodia kutsutaan heti sovellustakäynnistäessä. näin oliota voi myös käyttää muissa komponenteissä dependency injection kautta
+	// commandlinerunner on Springin käyttöliittymä, jonka metodi suoritetaan sovelluksen heti käynnistyessä. kätevä tapa tehdä alustavaa dataatietokantaan.
+	// repositoriot injektoidaan metodiin Springin kautta, että voi käyttää repository-oliota tallentamaan book-olioita tietokantaan
+	public CommandLineRunner seedData(BookRepository bookRepository, CategoryRepository categoryRepository, AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
 		return (args) -> {
 			log.info("save a couple of categories");
 			// luodaan ja tallennetaan kategoriat
@@ -61,6 +60,13 @@ public class BookstoreApplication {
 			for (Book book : bookRepository.findAll()) {
 				log.info(book.toString());
 			}
+
+			// käyttäjät: user ja admin. salasanat hashattu 
+		
+			AppUser user1 = new AppUser("user", passwordEncoder.encode("user"), "USER");
+			AppUser user2 = new AppUser("admin", passwordEncoder.encode("admin"), "ADMIN");
+			appUserRepository.save(user1);
+			appUserRepository.save(user2);
 		};
 
 	}

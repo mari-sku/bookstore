@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 //sisältää mm. login
 
+// http://localhost:8080/login
+
 @Controller
 public class AuthController {
 
