@@ -11,6 +11,6 @@ RUN mvn -f /home/app/pom.xml clean package
 #
 FROM eclipse-temurin:21-jre
 # bookstore-0.0.1-SNAPSHOT.jar  = <artifactId>-<version>.jar (pom.xml)
-COPY --from=build /home/app/target/*.jar /usr/local/lib/bookstore.jar
+COPY --from=build /home/app/target/bookstore-0.0.1-SNAPSHOT.jar /usr/local/lib/bookstore.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/usr/local/lib/bookstore.jar"]
