@@ -58,23 +58,13 @@ public String addBook(Model model) {
    return "addbook";
 }
 //SAVE tallenna kirja listaan
-@PostMapping("/save/{id}")
-    public String saveBook(@PathVariable("id") Long id, @ModelAttribute("book") Book book, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "editbook";
-        }
-        
-        Book existingBook = bookRepository.findById(id).orElse(null);
-        if (existingBook != null) {
-            existingBook.setTitle(book.getTitle());
-            existingBook.setAuthor(book.getAuthor());
-            existingBook.setPublicationYear(book.getPublicationYear());
-            existingBook.setIsbn(book.getIsbn());
-            existingBook.setPrice(book.getPrice());
-            bookRepository.save(existingBook);
-        }
-        
-        return "redirect:/booklist";
+@PostMapping("/save")
+   public String saveBook(@ModelAttribute("book") Book book, BindingResult bindingResult) {
+  if (bindingResult.hasErrors()) {
+        return "addbook";
+    }
+    bookRepository.save(book);
+    return "redirect:/booklist";
     }
 
 //EDIT
