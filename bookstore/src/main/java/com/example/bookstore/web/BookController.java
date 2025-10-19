@@ -69,9 +69,10 @@ public String addBook(Model model) {
 
 //EDIT
 
-@GetMapping("/edit/{id}")
+@GetMapping("/editbook/{id}")
     public String editBook(@PathVariable("id") Long id, Model model) {
         Book book = bookRepository.findById(id).orElse(null);
+         model.addAttribute("categories", categoryRepository.findAll());
         if (book != null) {
             model.addAttribute("book", book);
             return "editbook";

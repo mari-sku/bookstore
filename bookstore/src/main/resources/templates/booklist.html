@@ -37,7 +37,7 @@
             <td th:text="${book.publicationYear}"></td>
             <td th:text="${book.isbn}"></td>
             <td th:text="${book.price}"></td>
-            <td th:text="${book.category.name}"></td>
+            <td th:text="${book.category != null ? book.category.name : 'No category'}"></td>
             <!-- vain admin näkee poistonapin -->
            <td sec:authorize="hasAuthority('ADMIN')">
     <a th:href="@{/deletebook/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
@@ -47,6 +47,6 @@
             </td>
         </tr>
     </table>
-    <a th:href="@{/add}" class="btn btn-success">Add Book</a>
+    <a th:href="@{/addbook}" class="btn btn-success">Add Book</a>
 </body>
 </html>
